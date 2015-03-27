@@ -30,7 +30,7 @@ In the UIViewControllerTransitioningDelegate implementation pass StarWarsAnimate
 func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
   let animator = StarWarsAnimatedTransitioning()
   animator.transitionOperation = .Present
-  animator.transitionDirection = .Right
+  animator.transitionDirection = .LinearRight
 
   return animator
 }
@@ -38,7 +38,7 @@ func animationControllerForPresentedController(presented: UIViewController, pres
 func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
   let animator = StarWarsAnimatedTransitioning()
   animator.transitionOperation = .Dismiss
-  animator.transitionDirection = .Up
+  animator.transitionDirection = .CircularCounterclockwise
 
   return animator
 }
@@ -47,33 +47,13 @@ func animationControllerForDismissedController(dismissed: UIViewController) -> U
 
 ##Objective-C Support
 
-To be able to use StarWarsAnimatedTransitioning in Objective-C classes requires a little bit of extra attention. Swift enums are not imported in Objective-C thus it is required to use different properties for transitionOperation & transitionDirection - operation & direction respectively. They workaround the above problem using strings and auxiliary type methods to get the Swift enums' raw values.
-
-Using StarWarsAnimatedTransitioning with default values does not require any additional work - just alloc/init and return the object.
-
-```objective-c
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-  StarWarsAnimatedTransitioning *animator = [[StarWarsAnimatedTransitioning alloc] init];
-  animator.operation = [StarWarsAnimatedTransitioning presentTransitionOperation];
-  animator.direction = [StarWarsAnimatedTransitioning upTransitionDirection];
-
-  return animator;
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-  StarWarsAnimatedTransitioning *animator = [[StarWarsAnimatedTransitioning alloc] init];
-  animator.operation = [StarWarsAnimatedTransitioning dismissTransitionOperation];
-  animator.direction = [StarWarsAnimatedTransitioning downTransitionDirection];
-
-  return animator;
-}
-```
+StarWarsAnimatedTransitioning uses Swift 1.2 enums expose in Objective-C. The current version works only with Swift 1.2 and above and Xcode 6.3 and above.
 
 ##Future Updates:
 
-* Radial transition style
 * Faded edges
 
 ##License
-StarWarsAnimatedTransitioning is MIT-licensed.  
-If you use it please acknowledge it and tell me about it!
+StarWarsAnimatedTransitioning is MIT-licensed.
+
+If you use it please acknowledge it and tell me about it. I would like to hear how you use it in your apps!
