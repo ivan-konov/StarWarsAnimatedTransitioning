@@ -33,8 +33,8 @@ class ViewController: UIViewController {
 extension ViewController: UIViewControllerTransitioningDelegate {
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = StarWarsAnimatedTransitioning()
-        animator.transitionOperation = .Present
-        animator.transitionDirection = .Right
+        animator.operation = .Present
+        animator.type = .LinearRight
         
         return animator
     }
@@ -42,8 +42,8 @@ extension ViewController: UIViewControllerTransitioningDelegate {
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = StarWarsAnimatedTransitioning()
         
-        animator.transitionOperation = .Dismiss
-        animator.transitionDirection = .Up
+        animator.operation = .Dismiss
+        animator.type = .LinearUp
         
         return animator
     }

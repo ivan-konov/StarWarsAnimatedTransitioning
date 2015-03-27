@@ -27,68 +27,25 @@
 
 import UIKit
 
-enum StarWarsTransitionDirection: String {
-    case Right = "Right"
-    case Left = "Left"
-    case Up = "Up"
-    case Down = "Down"
+enum StarWarsTransitionType {
+    case LinearRight
+    case LinearLeft
+    case LinearUp
+    case LinearDown
+    case CircularClockwise
+    case CircularCounterclockwise
 }
 
-enum StarWarsOperation: String {
-    case Present = "Present"
-    case Dismiss = "Dismiss"
+enum StarWarsOperation {
+    case Present
+    case Dismiss
 }
 
 class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     var duration: NSTimeInterval = 0.65
     
-    var transitionOperation: StarWarsOperation = .Present
-    var transitionDirection: StarWarsTransitionDirection = .Right
-    
-    // MARK: Objective-C Support
-    
-    class func presentTransitionOperation() -> String {
-        return StarWarsOperation.Present.rawValue
-    }
-    
-    class func dismissTransitionOperation() -> String {
-        return StarWarsOperation.Dismiss.rawValue
-    }
-    
-    class func rightTransitionDirection() -> String {
-        return StarWarsTransitionDirection.Right.rawValue
-    }
-    
-    class func leftTransitionDirection() -> String {
-        return StarWarsTransitionDirection.Left.rawValue
-    }
-    
-    class func upTransitionDirection() -> String {
-        return StarWarsTransitionDirection.Up.rawValue
-    }
-    
-    class func downTransitionDirection() -> String {
-        return StarWarsTransitionDirection.Down.rawValue
-    }
-    
-    var operation: String? {
-        didSet {
-            if operation != nil {
-                if let transitionOperation = StarWarsOperation(rawValue: operation!) {
-                    self.transitionOperation = transitionOperation
-                }
-            }
-        }
-    }
-    var direction: String? {
-        didSet {
-            if direction != nil {
-                if let transitionDirection = StarWarsTransitionDirection(rawValue: direction!) {
-                    self.transitionDirection = transitionDirection
-                }
-            }
-        }
-    }
+    var operation: StarWarsOperation = .Present
+    var type: StarWarsTransitionType = .LinearRight
     
     // MARK: Implementation
     
@@ -104,7 +61,7 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         
         var animatedLayer: CALayer!
         
-        if transitionOperation == .Present {
+        if operation == .Present {
             animatedLayer = toController?.view.layer
             
             containerView.addSubview(toController!.view)
@@ -114,7 +71,7 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         }
         
         setUpAnimationWithLayer(animatedLayer!) {
-            if self.transitionOperation == .Dismiss {
+            if self.operation == .Dismiss {
                 fromController!.view.removeFromSuperview()
             }
             
@@ -138,9 +95,9 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         var initialMaskFrame: CGRect!
         var finalPosition: CGPoint!
         
-        switch transitionDirection {
-        case .Right:
-            if transitionOperation == .Present {
+        switch type {
+        case .LinearRight:
+            if operation == .Present {
                 initialMaskFrame = layer.bounds
                 initialMaskFrame.origin.x -= CGRectGetWidth(initialMaskFrame)
                 
@@ -152,8 +109,8 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
                 finalPosition = layer.position
                 finalPosition.x += CGRectGetWidth(layer.bounds)
             }
-        case .Left:
-            if transitionOperation == .Present {
+        case .LinearLeft:
+            if operation == .Present {
                 initialMaskFrame = layer.bounds
                 initialMaskFrame.origin.x += CGRectGetWidth(initialMaskFrame)
                 
@@ -165,8 +122,8 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
                 finalPosition = layer.position
                 finalPosition.x -= CGRectGetWidth(layer.bounds)
             }
-        case .Up:
-            if transitionOperation == .Present {
+        case .LinearUp:
+            if operation == .Present {
                 initialMaskFrame = layer.bounds
                 initialMaskFrame.origin.y += CGRectGetHeight(layer.bounds)
                 
@@ -178,8 +135,8 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
                 finalPosition = layer.position
                 finalPosition.y -= CGRectGetHeight(layer.bounds)
             }
-        case .Down:
-            if transitionOperation == .Present {
+        case .LinearDown:
+            if operation == .Present {
                 initialMaskFrame = layer.bounds
                 initialMaskFrame.origin.y -= CGRectGetHeight(layer.bounds)
                 
@@ -191,6 +148,12 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
                 finalPosition = layer.position
                 finalPosition.y += CGRectGetHeight(layer.bounds)
             }
+        default:
+            // TODO: add Circular types
+            initialMaskFrame = CGRectZero;
+            finalPosition = CGPointZero;
+            
+            break;
         }
         
         return (initialMaskFrame, finalPosition)
