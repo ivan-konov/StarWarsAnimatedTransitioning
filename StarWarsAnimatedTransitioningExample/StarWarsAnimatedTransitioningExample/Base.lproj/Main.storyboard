@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7518.3"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,17 +16,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1st Controller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIn-wc-g0V">
-                                <rect key="frame" x="177" y="275" width="246" height="51"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="road" translatesAutoresizingMaskIntoConstraints="NO" id="Xnl-4T-tfq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We have different roads..." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ha1-Bh-5gl">
+                                <rect key="frame" x="10" y="480" width="230" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="230" id="BpB-WP-5E1"/>
+                                    <constraint firstAttribute="height" constant="120" id="LCd-j2-ePL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="28"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="nIn-wc-g0V" secondAttribute="centerY" id="FZQ-pG-5yg"/>
-                            <constraint firstAttribute="centerX" secondItem="nIn-wc-g0V" secondAttribute="centerX" id="dlK-6M-BB1"/>
+                            <constraint firstItem="Xnl-4T-tfq" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="6H6-aP-OjM"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ha1-Bh-5gl" secondAttribute="bottom" id="cGk-zY-gzN"/>
+                            <constraint firstItem="ha1-Bh-5gl" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="q2v-Qo-jIG"/>
+                            <constraint firstAttribute="bottom" secondItem="Xnl-4T-tfq" secondAttribute="bottom" id="qV9-2t-dLo"/>
+                            <constraint firstItem="Xnl-4T-tfq" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="rJg-0I-8kw"/>
+                            <constraint firstAttribute="trailing" secondItem="Xnl-4T-tfq" secondAttribute="trailing" id="weW-vX-NtJ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -48,38 +59,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ahh-ZE-Gal">
-                                <rect key="frame" x="282" y="100" width="37" height="37"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="road-2" translatesAutoresizingMaskIntoConstraints="NO" id="aqI-0N-OTP">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="waiting for us" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztO-nj-Kfu">
+                                <rect key="frame" x="70" y="400" width="230" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="230" id="4hc-kb-UZa"/>
+                                    <constraint firstAttribute="height" constant="80" id="cAN-Yg-hls"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="28"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HWO-xY-j1t">
+                                <rect key="frame" x="97" y="480" width="37" height="37"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpB-NN-OSW">
-                                <rect key="frame" x="20" y="184" width="560" height="41"/>
-                                <string key="text">This activity indicator demostrates the transitioning will not break any animated content in the animated view controllers' layers</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2nd Controller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cd8-nM-cjH">
-                                <rect key="frame" x="170" y="275" width="260" height="51"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="Cd8-nM-cjH" secondAttribute="centerY" id="NMT-im-35N"/>
-                            <constraint firstItem="ahh-ZE-Gal" firstAttribute="top" secondItem="VIq-gE-Zyx" secondAttribute="bottom" constant="80" id="fax-sc-x5H"/>
-                            <constraint firstItem="qpB-NN-OSW" firstAttribute="top" secondItem="ahh-ZE-Gal" secondAttribute="bottom" constant="47" id="hNf-cm-KvZ"/>
-                            <constraint firstAttribute="centerX" secondItem="Cd8-nM-cjH" secondAttribute="centerX" id="lKH-W0-Z3s"/>
-                            <constraint firstAttribute="centerX" secondItem="ahh-ZE-Gal" secondAttribute="centerX" id="rMC-qZ-tum"/>
-                            <constraint firstAttribute="trailing" secondItem="qpB-NN-OSW" secondAttribute="trailing" constant="20" id="urb-e9-wLy"/>
-                            <constraint firstItem="qpB-NN-OSW" firstAttribute="leading" secondItem="ENe-KP-uoz" secondAttribute="leading" constant="20" id="zhR-b0-eyR"/>
+                            <constraint firstItem="HWO-xY-j1t" firstAttribute="top" secondItem="ztO-nj-Kfu" secondAttribute="bottom" id="0Uo-Qy-xA0"/>
+                            <constraint firstAttribute="trailing" secondItem="aqI-0N-OTP" secondAttribute="trailing" id="CHe-uS-gcl"/>
+                            <constraint firstItem="aqI-0N-OTP" firstAttribute="leading" secondItem="ENe-KP-uoz" secondAttribute="leading" id="GjD-Aa-WW5"/>
+                            <constraint firstItem="ztO-nj-Kfu" firstAttribute="leading" secondItem="ENe-KP-uoz" secondAttribute="leading" constant="70" id="Kak-Nu-vek"/>
+                            <constraint firstItem="aqI-0N-OTP" firstAttribute="top" secondItem="ENe-KP-uoz" secondAttribute="top" id="Pgg-Ym-Grh"/>
+                            <constraint firstItem="a6u-v5-XwT" firstAttribute="top" secondItem="aqI-0N-OTP" secondAttribute="bottom" id="ZSD-uB-vV4"/>
+                            <constraint firstItem="ztO-nj-Kfu" firstAttribute="top" secondItem="ENe-KP-uoz" secondAttribute="top" constant="400" id="ZlC-6r-FBP"/>
+                            <constraint firstItem="HWO-xY-j1t" firstAttribute="centerX" secondItem="ztO-nj-Kfu" secondAttribute="centerX" constant="-70" id="uWS-bu-6i5"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P9z-pn-GES" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1783" y="268"/>
+            <point key="canvasLocation" x="1315" y="311"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="road" width="375" height="667"/>
+        <image name="road-2" width="375" height="667"/>
+    </resources>
 </document>

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "PresentSecondController" {
-            let secondController = segue.destinationViewController as UIViewController
+            let secondController = segue.destinationViewController as! UIViewController
             secondController.modalPresentationStyle = .Custom
             secondController.transitioningDelegate = self
         }
@@ -43,7 +43,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         let animator = StarWarsAnimatedTransitioning()
         
         animator.operation = .Dismiss
-        animator.type = .LinearUp
+        animator.type = .CircularCounterclockwise
         
         return animator
     }
