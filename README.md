@@ -6,7 +6,7 @@ StarWarsAnimatedTransitioning is suitable for modal presentation of view control
 
 It uses CALayer animations and masks so transitions do not break layout and dynamic/animated content in the view controllers involved.
 
-![anim](https://cloud.githubusercontent.com/assets/5302709/5523211/09accd16-89ce-11e4-83c9-3009ffcc273a.gif)
+![out](https://cloud.githubusercontent.com/assets/5302709/6905766/fba2c81c-d732-11e4-9b37-4cf759b18e73.gif)
 
 This is an experimentation with Core Animation during which I learned quite a few tricks 'till deciding the current implementation and APIs to use.
 I encourage everyone to familiarize themselves with masks, anchor points and transforms of CALayers!
@@ -20,9 +20,9 @@ In order to make the system use a custom animated transitioning class you have t
 ```swift
 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
   if segue.identifier == "PresentSecondController" {
-    let secondController = segue.destinationViewController as UIViewController
-    secondController.modalPresentationStyle = .Custom
-    secondController.transitioningDelegate = self
+    let destinationController = segue.destinationViewController as! UIViewController
+    destinationController.modalPresentationStyle = .Custom
+    destinationController.transitioningDelegate = self
   }
 }
 ```
