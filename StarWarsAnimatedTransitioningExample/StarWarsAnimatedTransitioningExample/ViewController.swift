@@ -34,7 +34,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = StarWarsAnimatedTransitioning()
         animator.operation = .Present
-        animator.type = .LinearRight
+        animator.type = .CircularClockwise
         
         return animator
     }
@@ -43,7 +43,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         let animator = StarWarsAnimatedTransitioning()
         
         animator.operation = .Dismiss
-        animator.type = .CircularCounterclockwise
+        animator.type = .CircularClockwise
         
         return animator
     }

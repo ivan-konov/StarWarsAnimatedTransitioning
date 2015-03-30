@@ -5,7 +5,7 @@
 //
 //The MIT License (MIT)
 //
-//Copyright (c) 2014 Ivan Konov
+//Copyright (c) 2014-2015 Ivan Konov
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ import UIKit
 }
 
 class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-    var duration: NSTimeInterval = 0.4
+    var duration: NSTimeInterval = 2.4
     
     var operation: StarWarsOperation = .Present
     var type: StarWarsTransitionType = .LinearRight
@@ -59,7 +59,6 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         
         var animatedLayer: CALayer!
         
-        // decide which VC view's layer we should animate based on the operation
         if operation == .Present {
             animatedLayer = toController?.view.layer
             
@@ -147,7 +146,7 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
                 finalPosition.y += CGRectGetHeight(layer.bounds)
             }
         default:
-            println("Something went wrong! Mask frame and position calculations should not be done for non-linear transition type.")
+            println("Something went wrong! Mask frame and position calculations should not be made for non-linear transition types.")
             
             initialMaskFrame = CGRectZero;
             finalPosition = CGPointZero;
@@ -158,14 +157,13 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
     
     private func performLinearTransitionWithLayer(layer: CALayer, completion: () -> Void) {
         let maskLayer = CALayer()
-        maskLayer.backgroundColor = UIColor.whiteColor().CGColor // the actual color is isrrelevant; all we need is the alpha channel
+        maskLayer.backgroundColor = UIColor.whiteColor().CGColor
         layer.mask = maskLayer
         
         let (initalFrame, finalPosition) = maskFrameAndPositionForLinearTransitionWithLayer(layer)
         maskLayer.frame = initalFrame
         
         CATransaction.setCompletionBlock {
-            // clean up
             layer.mask = nil
             
             completion()
@@ -175,27 +173,16 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         animation.duration = duration
         animation.fromValue = NSValue(CGPoint: layer.mask.position)
         animation.toValue = NSValue(CGPoint: finalPosition)
+        animation.timingFunction = CAMediaTimingFunction(name: kCAAnimationLinear)
+        
         layer.mask.addAnimation(animation, forKey: "position")
         
-        // make sure the screen will not blink due to mask layer going back to it's position set in the model
         layer.mask.position = finalPosition
     }
     
     // MARK: Circular Animations
     
-    private func performCircularTransitionWithLayer(layer: CALayer, completion: () -> Void) {
-        let maskLayer = CircularMaskLayer()
-        maskLayer.frame = layer.bounds
-        layer.mask = maskLayer
-  
-        CATransaction.setDisableActions(true)
-        CATransaction.setCompletionBlock {
-            // clean up
-            layer.mask = nil
-            
-            completion()
-        }
-        
+    private func anglesAndDirectionForCircularTransition() -> (Float, Float, Bool) {
         let start: Float
         let end: Float
         let clockwise: Bool
@@ -203,31 +190,81 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         switch(type) {
         case .CircularClockwise:
             clockwise = true
-            start = 0
-            end = 360
+            
+            if operation == .Present {
+                start = 0
+                end = 360
+            }
+            else {
+                start = 0
+                end = 360
+            }
         case .CircularCounterclockwise:
             clockwise = false
             start = 360
             end = 0
         default:
-             println("Something went wrong! No angle calculations should be made for non-circular transition types.")
+            println("Something went wrong! No angle calculations should be made for non-circular transition types.")
             
-             clockwise = true
-             start = 0
-             end = 0
+            clockwise = true
+            start = 0
+            end = 0
         }
+
+        return (start, end, clockwise)
+    }
+    
+    private func performCircularTransitionWithLayer(layer: CALayer, completion: () -> Void) {
+        let maskLayer = CircularMaskLayer()
+        
+        let msk = CAShapeLayer()
+        msk.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+        msk.path = UIBezierPath(ovalInRect: msk.bounds).CGPath
+        msk.backgroundColor = UIColor.blackColor().CGColor
+        
+//        msk.path = UIBezierPath
+//        maskLayer.frame = layer.bounds
+        
+        if operation == .Present {
+            maskLayer.fillColor = UIColor.whiteColor()
+        }
+        else {
+            maskLayer.fillColor = UIColor(white: 1, alpha: 1)
+        }
+        
+       // layer.addSublayer(maskLayer)
+        layer.mask = msk
+        
+        CATransaction.setDisableActions(true)
+        CATransaction.setCompletionBlock {
+            layer.mask = nil
+            
+           // maskLayer.removeFromSuperlayer()
+            
+            completion()
+        }
+        
+        let (startAngle, endAngle, clockwise) = anglesAndDirectionForCircularTransition()
+        
         maskLayer.clockwise = clockwise
-        maskLayer.startAngle = start
+        maskLayer.startAngle = startAngle
+        
+        if operation == .Present {
+            maskLayer.fillColor = UIColor.whiteColor()
+        }
+        else {
+            maskLayer.fillColor = UIColor.clearColor()
+        }
         
         let animation = CABasicAnimation(keyPath: "endAngle")
         animation.duration = duration
-        animation.fromValue = NSNumber(float: start)
-        animation.toValue = NSNumber(float: end)
+        animation.fromValue = NSNumber(float: startAngle)
+        animation.toValue = NSNumber(float: endAngle)
+        animation.timingFunction = CAMediaTimingFunction(name: kCAAnimationLinear)
         
-        maskLayer.addAnimation(animation, forKey: "endAngle")
+       // maskLayer.addAnimation(animation, forKey: "endAngle")
         
-        // make sure the screen will not blink due to mask layer going back to it's position set in the model
-        maskLayer.endAngle = end
+        maskLayer.endAngle = endAngle
     }
 }
 
@@ -235,16 +272,15 @@ class CircularMaskLayer: CALayer {
     var startAngle: Float = 0.0
     var endAngle: Float = 360.0
     var clockwise: Bool = true
-    
+    var fillColor: UIColor = UIColor(white: 1, alpha: 1)
     
     func degreesToRadians(angle: Float) -> Float {
         return angle * Float(M_PI) / 180.0
     }
     
     override func drawInContext(ctx: CGContext!) {
-        // Create the path
         let center = CGPointMake(bounds.size.width / 2, bounds.size.height / 2)
-        let radius = sqrt((center.x * center.x) + (center.y * center.y))//min(center.x, center.y)
+        let radius = sqrt((center.x * center.x) + (center.y * center.y))
         
         let path = UIBezierPath()
         path.moveToPoint(center)
@@ -252,13 +288,19 @@ class CircularMaskLayer: CALayer {
         path.addArcWithCenter(center, radius: radius, startAngle: CGFloat(degreesToRadians(startAngle)), endAngle: CGFloat(degreesToRadians(endAngle)), clockwise: clockwise)
         path.closePath()
         
+        CGContextSetFillColorWithColor(ctx, UIColor.clearColor().CGColor)
+        CGContextSetStrokeColorWithColor(ctx, UIColor.blackColor().CGColor);
         CGContextBeginPath(ctx)
         CGContextAddPath(ctx, path.CGPath)
         CGContextDrawPath(ctx, kCGPathFillStroke);
+        
+        println("draw")
     }
     
     override class func needsDisplayForKey(key: String) -> Bool {
         if key == "startAngle" || key == "endAngle" {
+                    println("display")
+            
             return true
         }
         
