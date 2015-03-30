@@ -42,7 +42,7 @@ import UIKit
 }
 
 class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-    var duration: NSTimeInterval = 1.4
+    var duration: NSTimeInterval = 0.6
     
     var operation: StarWarsOperation = .Present
     var type: StarWarsTransitionType = .LinearRight
@@ -194,7 +194,6 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
                 
                 start = -M_PI_2
                 end = 3 * M_PI_2
-                
             }
             else {
                 clockwise = false
@@ -239,7 +238,7 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         let center = CGPoint(x: CGRectGetWidth(maskLayer.bounds) / 2, y: CGRectGetHeight(maskLayer.bounds) / 2)
         let radius = sqrt((center.x * center.x) + (center.y * center.y)) / 2
         
-        maskLayer.lineWidth = CGFloat(radius) * UIScreen.mainScreen().scale
+        maskLayer.lineWidth = CGFloat(radius) * 2
         
         let (startAngle, endAngle, clockwise) = anglesAndDirectionForCircularTransition()
         
@@ -258,6 +257,7 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         layer.mask = maskLayer
         
         CATransaction.setCompletionBlock {
+            layer.mask.removeAllAnimations()
             layer.mask = nil
             
             completion()
@@ -265,12 +265,14 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = duration
+        animation.fillMode = kCAFillModeForwards
+        animation.removedOnCompletion = false
         animation.timingFunction = CAMediaTimingFunction(name: kCAAnimationLinear)
-        if operation == .Dismiss {
-            animation.toValue = NSNumber(float: 0.0)
+        if operation == .Present {
+            animation.toValue = NSNumber(float: 1.0)
         }
         else {
-            animation.toValue = NSNumber(float: 1.0)
+            animation.toValue = NSNumber(float: 0.0)
         }
         
         maskLayer.addAnimation(animation, forKey: "strokeEnd")

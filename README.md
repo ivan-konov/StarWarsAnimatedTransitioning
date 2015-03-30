@@ -1,6 +1,9 @@
 #StarWarsAnimatedTransitioning
 
 UIViewController animated transitioning mimicking the Star Wars scene transitions using the custom animated transition APIs added in iOS 7.
+
+StarWarsAnimatedTransitioning is suitable for modal presentation of view controllers.
+
 It uses CALayer animations and masks so transitions do not break layout and dynamic/animated content in the view controllers involved.
 
 ![anim](https://cloud.githubusercontent.com/assets/5302709/5523211/09accd16-89ce-11e4-83c9-3009ffcc273a.gif)
@@ -24,30 +27,30 @@ override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 }
 ```
 
-In the UIViewControllerTransitioningDelegate implementation pass StarWarsAnimatedTransitioning and set it's properties to depending on presentation operation and directions.
+In the UIViewControllerTransitioningDelegate methods pass a StarWarsAnimatedTransitioning object and set it's properties to depending on presentation operation and directions.
 
 ```swift
 func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
   let animator = StarWarsAnimatedTransitioning()
-  animator.transitionOperation = .Present
-  animator.transitionDirection = .LinearRight
+  animator.operation = .Present
+  animator.type = .LinearRight
 
   return animator
 }
 
 func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
   let animator = StarWarsAnimatedTransitioning()
-  animator.transitionOperation = .Dismiss
-  animator.transitionDirection = .CircularCounterclockwise
+  animator.operation = .Dismiss
+  animator.type = .CircularCounterclockwise
 
   return animator
 }
 
 ```
+#System Requirements
 
-##Objective-C Support
-
-StarWarsAnimatedTransitioning uses Swift 1.2 enums expose in Objective-C. The current version works only with Swift 1.2 and above and Xcode 6.3 and above.
+iOS 8.0 +
+Xcode 6.3beta + (Swift 1.2 is required)
 
 ##Future Updates:
 

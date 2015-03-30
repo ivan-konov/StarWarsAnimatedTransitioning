@@ -19,8 +19,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="road" translatesAutoresizingMaskIntoConstraints="NO" id="Xnl-4T-tfq">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We have different roads..." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ha1-Bh-5gl">
-                                <rect key="frame" x="10" y="480" width="230" height="120"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cool photo of a road" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ha1-Bh-5gl">
+                                <rect key="frame" x="10" y="20" width="230" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="BpB-WP-5E1"/>
                                     <constraint firstAttribute="height" constant="120" id="LCd-j2-ePL"/>
@@ -33,7 +33,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Xnl-4T-tfq" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="6H6-aP-OjM"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ha1-Bh-5gl" secondAttribute="bottom" id="cGk-zY-gzN"/>
+                            <constraint firstItem="ha1-Bh-5gl" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="aX1-QY-T7M"/>
                             <constraint firstItem="ha1-Bh-5gl" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="q2v-Qo-jIG"/>
                             <constraint firstAttribute="bottom" secondItem="Xnl-4T-tfq" secondAttribute="bottom" id="qV9-2t-dLo"/>
                             <constraint firstItem="Xnl-4T-tfq" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="rJg-0I-8kw"/>
@@ -62,10 +62,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="road-2" translatesAutoresizingMaskIntoConstraints="NO" id="aqI-0N-OTP">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="waiting for us" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztO-nj-Kfu">
-                                <rect key="frame" x="70" y="400" width="230" height="80"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="...another one waiting to be seen" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztO-nj-Kfu">
+                                <rect key="frame" x="70" y="403" width="250" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="4hc-kb-UZa"/>
+                                    <constraint firstAttribute="width" constant="250" id="4hc-kb-UZa"/>
                                     <constraint firstAttribute="height" constant="80" id="cAN-Yg-hls"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="28"/>
@@ -73,25 +73,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HWO-xY-j1t">
-                                <rect key="frame" x="97" y="480" width="37" height="37"/>
+                                <rect key="frame" x="107" y="493" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="HWO-xY-j1t" firstAttribute="top" secondItem="ztO-nj-Kfu" secondAttribute="bottom" id="0Uo-Qy-xA0"/>
+                            <constraint firstItem="HWO-xY-j1t" firstAttribute="top" secondItem="ztO-nj-Kfu" secondAttribute="bottom" constant="10" id="0Uo-Qy-xA0"/>
                             <constraint firstAttribute="trailing" secondItem="aqI-0N-OTP" secondAttribute="trailing" id="CHe-uS-gcl"/>
                             <constraint firstItem="aqI-0N-OTP" firstAttribute="leading" secondItem="ENe-KP-uoz" secondAttribute="leading" id="GjD-Aa-WW5"/>
+                            <constraint firstItem="a6u-v5-XwT" firstAttribute="top" secondItem="HWO-xY-j1t" secondAttribute="bottom" constant="70" id="KH9-g1-oI8"/>
                             <constraint firstItem="ztO-nj-Kfu" firstAttribute="leading" secondItem="ENe-KP-uoz" secondAttribute="leading" constant="70" id="Kak-Nu-vek"/>
                             <constraint firstItem="aqI-0N-OTP" firstAttribute="top" secondItem="ENe-KP-uoz" secondAttribute="top" id="Pgg-Ym-Grh"/>
                             <constraint firstItem="a6u-v5-XwT" firstAttribute="top" secondItem="aqI-0N-OTP" secondAttribute="bottom" id="ZSD-uB-vV4"/>
-                            <constraint firstItem="ztO-nj-Kfu" firstAttribute="top" secondItem="ENe-KP-uoz" secondAttribute="top" constant="400" id="ZlC-6r-FBP"/>
                             <constraint firstItem="HWO-xY-j1t" firstAttribute="centerX" secondItem="ztO-nj-Kfu" secondAttribute="centerX" constant="-70" id="uWS-bu-6i5"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P9z-pn-GES" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1315" y="311"/>
+            <point key="canvasLocation" x="1325" y="267"/>
         </scene>
     </scenes>
     <resources>
