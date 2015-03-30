@@ -42,7 +42,7 @@ import UIKit
 }
 
 class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-    var duration: NSTimeInterval = 2.4
+    var duration: NSTimeInterval = 1.4
     
     var operation: StarWarsOperation = .Present
     var type: StarWarsTransitionType = .LinearRight
@@ -183,26 +183,38 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
     // MARK: Circular Animations
     
     private func anglesAndDirectionForCircularTransition() -> (Float, Float, Bool) {
-        let start: Float
-        let end: Float
+        let start: Double
+        let end: Double
         let clockwise: Bool
         
         switch(type) {
         case .CircularClockwise:
-            clockwise = true
-            
             if operation == .Present {
-                start = 0
-                end = 360
+                clockwise = true
+                
+                start = -M_PI_2
+                end = 3 * M_PI_2
+                
             }
             else {
-                start = 0
-                end = 360
+                clockwise = false
+                
+                start = -M_PI_2
+                end = -5 * M_PI_2
             }
         case .CircularCounterclockwise:
-            clockwise = false
-            start = 360
-            end = 0
+            if operation == .Present {
+                clockwise = false
+                
+                start = -M_PI_2
+                end = -5 * M_PI_2
+            }
+            else {
+                clockwise = true
+                
+                start = -M_PI_2
+                end = 3 * M_PI_2
+            }
         default:
             println("Something went wrong! No angle calculations should be made for non-circular transition types.")
             
@@ -210,100 +222,57 @@ class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
             start = 0
             end = 0
         }
-
-        return (start, end, clockwise)
+        
+        return (Float(start), Float(end), clockwise)
     }
     
     private func performCircularTransitionWithLayer(layer: CALayer, completion: () -> Void) {
-        let maskLayer = CircularMaskLayer()
+        let maskLayer = CAShapeLayer()
         
-        let msk = CAShapeLayer()
-        msk.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        msk.path = UIBezierPath(ovalInRect: msk.bounds).CGPath
-        msk.backgroundColor = UIColor.blackColor().CGColor
+        let maskWidth =  Float(CGRectGetWidth(layer.bounds))
+        let maskHeight = Float(CGRectGetHeight(layer.bounds))
         
-//        msk.path = UIBezierPath
-//        maskLayer.frame = layer.bounds
+        maskLayer.frame = layer.bounds
+        maskLayer.fillColor = UIColor.clearColor().CGColor
+        maskLayer.strokeColor = UIColor.whiteColor().CGColor
+        
+        let center = CGPoint(x: CGRectGetWidth(maskLayer.bounds) / 2, y: CGRectGetHeight(maskLayer.bounds) / 2)
+        let radius = sqrt((center.x * center.x) + (center.y * center.y)) / 2
+        
+        maskLayer.lineWidth = CGFloat(radius) * UIScreen.mainScreen().scale
+        
+        let (startAngle, endAngle, clockwise) = anglesAndDirectionForCircularTransition()
+        
+        let arcPath = UIBezierPath()
+        arcPath.addArcWithCenter(center, radius: CGFloat(radius), startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: clockwise)
+        arcPath.closePath()
+        maskLayer.path = arcPath.CGPath
         
         if operation == .Present {
-            maskLayer.fillColor = UIColor.whiteColor()
+            maskLayer.strokeEnd = 0.0
         }
         else {
-            maskLayer.fillColor = UIColor(white: 1, alpha: 1)
+            maskLayer.strokeEnd = 1.0
         }
         
-       // layer.addSublayer(maskLayer)
-        layer.mask = msk
+        layer.mask = maskLayer
         
-        CATransaction.setDisableActions(true)
         CATransaction.setCompletionBlock {
             layer.mask = nil
-            
-           // maskLayer.removeFromSuperlayer()
             
             completion()
         }
         
-        let (startAngle, endAngle, clockwise) = anglesAndDirectionForCircularTransition()
-        
-        maskLayer.clockwise = clockwise
-        maskLayer.startAngle = startAngle
-        
-        if operation == .Present {
-            maskLayer.fillColor = UIColor.whiteColor()
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.duration = duration
+        animation.timingFunction = CAMediaTimingFunction(name: kCAAnimationLinear)
+        if operation == .Dismiss {
+            animation.toValue = NSNumber(float: 0.0)
         }
         else {
-            maskLayer.fillColor = UIColor.clearColor()
+            animation.toValue = NSNumber(float: 1.0)
         }
         
-        let animation = CABasicAnimation(keyPath: "endAngle")
-        animation.duration = duration
-        animation.fromValue = NSNumber(float: startAngle)
-        animation.toValue = NSNumber(float: endAngle)
-        animation.timingFunction = CAMediaTimingFunction(name: kCAAnimationLinear)
-        
-       // maskLayer.addAnimation(animation, forKey: "endAngle")
-        
-        maskLayer.endAngle = endAngle
-    }
-}
-
-class CircularMaskLayer: CALayer {
-    var startAngle: Float = 0.0
-    var endAngle: Float = 360.0
-    var clockwise: Bool = true
-    var fillColor: UIColor = UIColor(white: 1, alpha: 1)
-    
-    func degreesToRadians(angle: Float) -> Float {
-        return angle * Float(M_PI) / 180.0
-    }
-    
-    override func drawInContext(ctx: CGContext!) {
-        let center = CGPointMake(bounds.size.width / 2, bounds.size.height / 2)
-        let radius = sqrt((center.x * center.x) + (center.y * center.y))
-        
-        let path = UIBezierPath()
-        path.moveToPoint(center)
-        path.addLineToPoint(CGPointMake(center.x + CGFloat(radius) * CGFloat(cosf(degreesToRadians(startAngle))), center.y + CGFloat(radius) * CGFloat(sinf(degreesToRadians(startAngle)))));
-        path.addArcWithCenter(center, radius: radius, startAngle: CGFloat(degreesToRadians(startAngle)), endAngle: CGFloat(degreesToRadians(endAngle)), clockwise: clockwise)
-        path.closePath()
-        
-        CGContextSetFillColorWithColor(ctx, UIColor.clearColor().CGColor)
-        CGContextSetStrokeColorWithColor(ctx, UIColor.blackColor().CGColor);
-        CGContextBeginPath(ctx)
-        CGContextAddPath(ctx, path.CGPath)
-        CGContextDrawPath(ctx, kCGPathFillStroke);
-        
-        println("draw")
-    }
-    
-    override class func needsDisplayForKey(key: String) -> Bool {
-        if key == "startAngle" || key == "endAngle" {
-                    println("display")
-            
-            return true
-        }
-        
-        return super.needsDisplayForKey(key)
+        maskLayer.addAnimation(animation, forKey: "strokeEnd")
     }
 }

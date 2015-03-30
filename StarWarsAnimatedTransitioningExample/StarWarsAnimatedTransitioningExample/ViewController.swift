@@ -43,7 +43,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         let animator = StarWarsAnimatedTransitioning()
         
         animator.operation = .Dismiss
-        animator.type = .CircularClockwise
+        animator.type = .CircularCounterclockwise
         
         return animator
     }
