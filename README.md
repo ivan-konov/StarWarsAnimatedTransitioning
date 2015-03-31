@@ -34,6 +34,7 @@ func animationControllerForPresentedController(presented: UIViewController, pres
   let animator = StarWarsAnimatedTransitioning()
   animator.operation = .Present
   animator.type = .LinearRight
+  animator.duration = 0.4
 
   return animator
 }
@@ -42,6 +43,7 @@ func animationControllerForDismissedController(dismissed: UIViewController) -> U
   let animator = StarWarsAnimatedTransitioning()
   animator.operation = .Dismiss
   animator.type = .CircularCounterclockwise
+  animator.duration = 1.0
 
   return animator
 }
