@@ -51,8 +51,9 @@ func animationControllerForDismissedController(dismissed: UIViewController) -> U
 ```
 #System Requirements
 
-iOS 8.0 +
-Xcode 6.3beta + (Swift 1.2 is required)
+iOS 8.0+
+
+Xcode 6.3beta+ (Swift 1.2 is required)
 
 ##Future Updates:
 
