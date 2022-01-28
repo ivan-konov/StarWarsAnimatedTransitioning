@@ -62,10 +62,8 @@
 				B6875E111A47175E007B1147 /* AppDelegate.swift */,
 				B6875E131A47175E007B1147 /* FirstViewController.swift */,
 				B6875E311A4717D7007B1147 /* SecondViewController.swift */,
-				B6875E181A47175E007B1147 /* Images.xcassets */,
-				B6875E1A1A47175E007B1147 /* LaunchScreen.xib */,
+				B6FBFB5C27A404B0006EF129 /* Resources */,
 				B6875E0F1A47175E007B1147 /* Supporting Files */,
-				B6A5912E27A3F9DF0099336B /* Main.storyboard */,
 			);
 			path = StarWarsAnimatedTransitioningExample;
 			sourceTree = "<group>";
@@ -85,6 +83,16 @@
 			);
 			name = StarWarsAnimatedTransitioning;
 			path = ../StarWarsAnimatedTransitioning;
+			sourceTree = "<group>";
+		};
+		B6FBFB5C27A404B0006EF129 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B6875E181A47175E007B1147 /* Images.xcassets */,
+				B6A5912E27A3F9DF0099336B /* Main.storyboard */,
+				B6875E1A1A47175E007B1147 /* LaunchScreen.xib */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
