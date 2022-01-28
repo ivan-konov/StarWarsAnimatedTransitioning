@@ -1,10 +1,10 @@
 #StarWarsAnimatedTransitioning
 
-`UIViewController` animated transitioning mimicking the Star Wars scene transitions using the custom animated transition APIs added in iOS 7.
+UIViewController animated transitioning mimicking the Star Wars scene transitions using the custom animated transition APIs added in iOS 7.
 
-`StarWarsAnimatedTransitioning` is suitable for modal presentation of view controllers.
+StarWarsAnimatedTransitioning is suitable for modal presentation of view controllers.
 
-It uses `CALayer` animations and masks so transitions do not break layout and dynamic/animated content in the view controllers involved.
+It uses CALayer animations and masks so transitions do not break layout and dynamic/animated content in the view controllers involved.
 
 ![out](https://cloud.githubusercontent.com/assets/5302709/6905766/fba2c81c-d732-11e4-9b37-4cf759b18e73.gif)
 
@@ -15,7 +15,7 @@ Feedback is welcome and greatly appreciated!
 
 ##Usage
 
-In order to make the system use a custom animated transitioning class you have to set the presented controller's` modalPresentationStyle` and `transitioningDelegate` properties:
+In order to make the system use a custom animated transitioning class you have to set the presented controller's modalPresentationStyle and transitioningDelegate properties:
 
 ```swift
 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -27,7 +27,7 @@ override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 }
 ```
 
-In the `UIViewControllerTransitioningDelegate` methods pass a `StarWarsAnimatedTransitioning` object and set it's properties to depending on presentation operation and directions.
+In the UIViewControllerTransitioningDelegate methods pass a StarWarsAnimatedTransitioning object and set it's properties to depending on presentation operation and directions.
 
 ```swift
 func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

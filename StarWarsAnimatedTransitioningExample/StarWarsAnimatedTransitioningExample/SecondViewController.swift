@@ -12,11 +12,11 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissSelf")
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissSelf))
         view.addGestureRecognizer(tapRecognizer)
     }
     
-    func dismissSelf() {
-        dismissViewControllerAnimated(true, completion: nil)
+    @objc func dismissSelf() {
+        dismiss(animated: true, completion: nil)
     }
 }
