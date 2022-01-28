@@ -42,15 +42,27 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
         case dismiss
     }
     
-    var duration: TimeInterval = 0.6
-    var operation: Operation = .present
-    var type: TransitionType = .linearRight
+    let duration: TimeInterval
+    let operation: Operation
+    let transitionType: TransitionType
+    
+    init(duration: TimeInterval = 0.6, operation: Operation = .present, transitionType: TransitionType = .linearRight) {
+        self.duration = duration
+        self.operation = operation
+        self.transitionType = transitionType
+    }
+    
+    // MARK: - UIViewControllerAnimatedTransitioning
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return duration
+        duration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard transitionContext.isAnimated else {
+            return
+        }
+        
         guard let fromController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
               let toController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) else {
                   print("Missing transitioning view controllers!")
@@ -78,7 +90,7 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
     }
     
     private func performAnimationWithLayer(layer: CALayer, completion: @escaping () -> Void) {
-        switch (type) {
+        switch transitionType {
         case .linearLeft, .linearRight, .linearUp, .linearDown:
             performLinearTransitionWithLayer(layer: layer, completion: completion)
         case .circularClockwise, .circularCounterclockwise:
@@ -92,7 +104,7 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
         var initialMaskFrame: CGRect
         var finalPosition: CGPoint
         
-        switch type {
+        switch transitionType {
         case .linearRight:
             if operation == .present {
                 initialMaskFrame = layer.bounds
@@ -181,27 +193,15 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
         let endAngle: Double
         let isClockwise: Bool
         
-        switch(type) {
+        switch transitionType {
         case .circularClockwise:
-            if operation == .present {
-                isClockwise = true
-                startAngle = -(Double.pi / 2)
-                endAngle = 3 * (Double.pi / 2)
-            } else {
-                isClockwise = false
-                startAngle = -(Double.pi / 2)
-                endAngle = -5 * (Double.pi / 2)
-            }
+            startAngle = -(Double.pi / 2)
+            endAngle = operation == .present ? 3 * (Double.pi / 2) : -5 * (Double.pi / 2)
+            isClockwise = operation == .present ? true : false
         case .circularCounterclockwise:
-            if operation == .present {
-                isClockwise = false
-                startAngle = -(Double.pi / 2)
-                endAngle = -5 * (Double.pi / 2)
-            } else {
-                isClockwise = true
-                startAngle = -(Double.pi / 2)
-                endAngle = 3 * (Double.pi / 2)
-            }
+            startAngle = -(Double.pi / 2)
+            endAngle = operation == .present ? -5 * (Double.pi / 2) : 3 * (Double.pi / 2)
+            isClockwise = operation == .present ? false : true
         default:
             print("Something went wrong! No angle calculations should be made for non-circular transition types.")
             
