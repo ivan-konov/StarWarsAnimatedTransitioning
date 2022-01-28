@@ -1,3 +1,8 @@
+*NOTICE* I am updating the project to modern Swift. This will be updated as well after I am done.
+
+
+
+
 #StarWarsAnimatedTransitioning
 
 UIViewController animated transitioning mimicking the Star Wars scene transitions using the custom animated transition APIs added in iOS 7.
