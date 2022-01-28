@@ -5,7 +5,7 @@
 //
 //The MIT License (MIT)
 //
-//Copyright (c) 2014-2015 Ivan Konov
+//Copyright (c) 2014-2022 Ivan Konov
 //
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -27,50 +27,50 @@
 
 import UIKit
 
-enum StarWarsTransitionType {
-    case linearRight
-    case linearLeft
-    case linearUp
-    case linearDown
-    case circularClockwise
-    case circularCounterclockwise
-}
-
-enum StarWarsOperation {
-    case present
-    case dismiss
-}
-
 final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-    var duration: TimeInterval = 0.6
+    enum TransitionType {
+        case linearRight
+        case linearLeft
+        case linearUp
+        case linearDown
+        case circularClockwise
+        case circularCounterclockwise
+    }
+
+    enum Operation {
+        case present
+        case dismiss
+    }
     
-    var operation: StarWarsOperation = .present
-    var type: StarWarsTransitionType = .linearRight
+    var duration: TimeInterval = 0.6
+    var operation: Operation = .present
+    var type: TransitionType = .linearRight
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
-        let toController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
+        guard let fromController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
+              let toController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) else {
+                  print("Missing transitioning view controllers!")
+                  return
+              }
         
         let containerView = transitionContext.containerView
         
-        var animatedLayer: CALayer!
-        
+        var animatedLayer: CALayer
         if operation == .present {
-            animatedLayer = toController?.view.layer
-            
-            containerView.addSubview(toController!.view)
+            animatedLayer = toController.view.layer
+            containerView.addSubview(toController.view)
         }
         else {
-            animatedLayer = fromController!.view.layer
+            animatedLayer = fromController.view.layer
         }
         
-        performAnimationWithLayer(layer: animatedLayer) {
-            if self.operation == .dismiss {
-                fromController!.view.removeFromSuperview()
+        performAnimationWithLayer(layer: animatedLayer) { [weak self] in
+            if self?.operation == .dismiss {
+                fromController.view.removeFromSuperview()
             }
             
             transitionContext.completeTransition(true)
@@ -88,9 +88,9 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
     
     // MARK: - Linear Animations
     
-    private func maskFrameAndPositionForLinearTransitionWithLayer(layer: CALayer) -> (CGRect, CGPoint){
-        var initialMaskFrame: CGRect!
-        var finalPosition: CGPoint!
+    private func maskFrameAndPositionForLinearTransition(with layer: CALayer) -> (CGRect, CGPoint) {
+        var initialMaskFrame: CGRect
+        var finalPosition: CGPoint
         
         switch type {
         case .linearRight:
@@ -99,8 +99,7 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
                 initialMaskFrame.origin.x -= initialMaskFrame.width
                 
                 finalPosition = layer.position
-            }
-            else {
+            } else {
                 initialMaskFrame = layer.bounds
                 
                 finalPosition = layer.position
@@ -112,8 +111,7 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
                 initialMaskFrame.origin.x += initialMaskFrame.width
                 
                 finalPosition = layer.position
-            }
-            else {
+            } else {
                 initialMaskFrame = layer.bounds
                 
                 finalPosition = layer.position
@@ -125,8 +123,7 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
                 initialMaskFrame.origin.y += layer.bounds.height
                 
                 finalPosition = layer.position
-            }
-            else {
+            } else {
                 initialMaskFrame = layer.bounds
                 
                 finalPosition = layer.position
@@ -138,8 +135,7 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
                 initialMaskFrame.origin.y -= layer.bounds.height
                 
                 finalPosition = layer.position
-            }
-            else {
+            } else {
                 initialMaskFrame = layer.bounds
                 
                 finalPosition = layer.position
@@ -160,12 +156,11 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
         maskLayer.backgroundColor = UIColor.white.cgColor
         layer.mask = maskLayer
         
-        let (initalFrame, finalPosition) = maskFrameAndPositionForLinearTransitionWithLayer(layer: layer)
+        let (initalFrame, finalPosition) = maskFrameAndPositionForLinearTransition(with: layer)
         maskLayer.frame = initalFrame
         
         CATransaction.setCompletionBlock {
             layer.mask = nil
-            
             completion()
         }
         
@@ -176,53 +171,46 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         
         maskLayer.add(animation, forKey: "position")
-        
         maskLayer.position = finalPosition
     }
     
     // MARK: - Circular Animations
     
-    private func anglesAndDirectionForCircularTransition() -> (Float, Float, Bool) {
-        let start: Double
-        let end: Double
-        let clockwise: Bool
+    private func anglesAndDirectionForCircularTransition() -> (CGFloat, CGFloat, Bool) {
+        let startAngle: Double
+        let endAngle: Double
+        let isClockwise: Bool
         
         switch(type) {
         case .circularClockwise:
             if operation == .present {
-                clockwise = true
-                
-                start = -Double.pi / 2
-                end = 3 * Double.pi / 2
-            }
-            else {
-                clockwise = false
-                
-                start = -Double.pi / 2
-                end = -5 * Double.pi / 2
+                isClockwise = true
+                startAngle = -(Double.pi / 2)
+                endAngle = 3 * (Double.pi / 2)
+            } else {
+                isClockwise = false
+                startAngle = -(Double.pi / 2)
+                endAngle = -5 * (Double.pi / 2)
             }
         case .circularCounterclockwise:
             if operation == .present {
-                clockwise = false
-                
-                start = -Double.pi / 2
-                end = -5 * Double.pi / 2
-            }
-            else {
-                clockwise = true
-                
-                start = -Double.pi / 2
-                end = 3 * Double.pi / 2
+                isClockwise = false
+                startAngle = -(Double.pi / 2)
+                endAngle = -5 * (Double.pi / 2)
+            } else {
+                isClockwise = true
+                startAngle = -(Double.pi / 2)
+                endAngle = 3 * (Double.pi / 2)
             }
         default:
             print("Something went wrong! No angle calculations should be made for non-circular transition types.")
             
-            clockwise = true
-            start = 0
-            end = 0
+            isClockwise = true
+            startAngle = 0
+            endAngle = 0
         }
         
-        return (Float(start), Float(end), clockwise)
+        return (CGFloat(startAngle), CGFloat(endAngle), isClockwise)
     }
     
     private func performCircularTransitionWithLayer(layer: CALayer, completion: @escaping () -> Void) {
@@ -232,26 +220,23 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
         maskLayer.strokeColor = UIColor.white.cgColor
         
         let center = CGPoint(x: maskLayer.bounds.width / 2, y: maskLayer.bounds.height / 2)
-        let radius = sqrt((center.x * center.x) + (center.y * center.y)) / 2
+        let radius = CGFloat(sqrt((center.x * center.x) + (center.y * center.y)) / 2)
         
-        maskLayer.lineWidth = CGFloat(radius) * 2
+        maskLayer.lineWidth = radius * 2
         
-        let (startAngle, endAngle, clockwise) = anglesAndDirectionForCircularTransition()
-        
+        let (startAngle, endAngle, isClockwise) = anglesAndDirectionForCircularTransition()
         let arcPath = UIBezierPath()
-        arcPath.addArc(withCenter: center, radius: CGFloat(radius), startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: clockwise)
+        arcPath.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: isClockwise)
         arcPath.close()
         maskLayer.path = arcPath.cgPath
         
         if operation == .present {
             maskLayer.strokeEnd = 0.0
-        }
-        else {
+        } else {
             maskLayer.strokeEnd = 1.0
         }
         
         layer.mask = maskLayer
-        
         CATransaction.setCompletionBlock {
             layer.mask?.removeAllAnimations()
             layer.mask = nil
@@ -266,8 +251,7 @@ final class StarWarsAnimatedTransitioning: NSObject, UIViewControllerAnimatedTra
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         if operation == .present {
             animation.toValue = NSNumber(value: 1.0)
-        }
-        else {
+        } else {
             animation.toValue = NSNumber(value: 0.0)
         }
         
