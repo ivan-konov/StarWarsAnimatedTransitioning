@@ -17,12 +17,7 @@ final class SecondViewController: UIViewController {
         let imageView = UIImageView(image: UIImage(named: "road-2"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(imageView)
-        NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            imageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
-            imageView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
-        ])
+        
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
@@ -30,11 +25,27 @@ final class SecondViewController: UIViewController {
         label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         label.textColor = .white
         containerView.addSubview(label)
+        
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        containerView.addSubview(spinner)
+        
         NSLayoutConstraint.activate([
-            label.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 40.0),
-            label.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 40.0),
+            imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            imageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
         ])
-
+        NSLayoutConstraint.activate([
+            label.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -40.0),
+            label.bottomAnchor.constraint(equalTo: spinner.topAnchor),
+        ])
+        NSLayoutConstraint.activate([
+            spinner.trailingAnchor.constraint(equalTo: label.trailingAnchor),
+            spinner.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -80.0),
+        ])
+        
         self.view = containerView
     }
     
