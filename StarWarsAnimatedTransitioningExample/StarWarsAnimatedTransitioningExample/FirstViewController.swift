@@ -29,11 +29,11 @@ final class FirstViewController: UIViewController {
 
 extension FirstViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        StarWarsAnimatedTransitioning(transitionType: .circularClockwise)
+        StarWarsAnimatedTransitioning(transitionType: .circular(isClockwise: true))
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        StarWarsAnimatedTransitioning(operation: .dismiss, transitionType: .circularCounterclockwise)
+        StarWarsAnimatedTransitioning(operation: .dismiss, transitionType: .circular(isClockwise: false))
     }
 }
 
