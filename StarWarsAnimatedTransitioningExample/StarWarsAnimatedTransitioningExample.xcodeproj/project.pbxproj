@@ -8,22 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		B6875E121A47175E007B1147 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6875E111A47175E007B1147 /* AppDelegate.swift */; };
-		B6875E141A47175E007B1147 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6875E131A47175E007B1147 /* ViewController.swift */; };
+		B6875E141A47175E007B1147 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6875E131A47175E007B1147 /* FirstViewController.swift */; };
 		B6875E191A47175E007B1147 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6875E181A47175E007B1147 /* Images.xcassets */; };
 		B6875E1C1A47175E007B1147 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6875E1A1A47175E007B1147 /* LaunchScreen.xib */; };
 		B6875E321A4717D7007B1147 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6875E311A4717D7007B1147 /* SecondViewController.swift */; };
 		B6875E351A47180B007B1147 /* StarWarsAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6875E341A47180B007B1147 /* StarWarsAnimatedTransitioning.swift */; };
+		B6A5912F27A3F9DF0099336B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A5912E27A3F9DF0099336B /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B6875E0C1A47175E007B1147 /* StarWarsAnimatedTransitioningExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarWarsAnimatedTransitioningExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6875E101A47175E007B1147 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6875E111A47175E007B1147 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B6875E131A47175E007B1147 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B6875E131A47175E007B1147 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		B6875E181A47175E007B1147 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B6875E1B1A47175E007B1147 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B6875E311A4717D7007B1147 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		B6875E341A47180B007B1147 /* StarWarsAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsAnimatedTransitioning.swift; sourceTree = "<group>"; };
+		B6A5912E27A3F9DF0099336B /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +60,12 @@
 			isa = PBXGroup;
 			children = (
 				B6875E111A47175E007B1147 /* AppDelegate.swift */,
-				B6875E131A47175E007B1147 /* ViewController.swift */,
+				B6875E131A47175E007B1147 /* FirstViewController.swift */,
 				B6875E311A4717D7007B1147 /* SecondViewController.swift */,
 				B6875E181A47175E007B1147 /* Images.xcassets */,
 				B6875E1A1A47175E007B1147 /* LaunchScreen.xib */,
 				B6875E0F1A47175E007B1147 /* Supporting Files */,
+				B6A5912E27A3F9DF0099336B /* Main.storyboard */,
 			);
 			path = StarWarsAnimatedTransitioningExample;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A5912F27A3F9DF0099336B /* Main.storyboard in Resources */,
 				B6875E1C1A47175E007B1147 /* LaunchScreen.xib in Resources */,
 				B6875E191A47175E007B1147 /* Images.xcassets in Resources */,
 			);
@@ -156,7 +160,7 @@
 			files = (
 				B6875E321A4717D7007B1147 /* SecondViewController.swift in Sources */,
 				B6875E351A47180B007B1147 /* StarWarsAnimatedTransitioning.swift in Sources */,
-				B6875E141A47175E007B1147 /* ViewController.swift in Sources */,
+				B6875E141A47175E007B1147 /* FirstViewController.swift in Sources */,
 				B6875E121A47175E007B1147 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
