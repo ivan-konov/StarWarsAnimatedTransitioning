@@ -25,11 +25,14 @@ final class SecondViewController: UIViewController {
         ])
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
         label.text = "Photo of another road"
+        label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
         containerView.addSubview(label)
         NSLayoutConstraint.activate([
             label.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 40.0),
-            imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 40.0),
+            label.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 40.0),
         ])
 
         self.view = containerView

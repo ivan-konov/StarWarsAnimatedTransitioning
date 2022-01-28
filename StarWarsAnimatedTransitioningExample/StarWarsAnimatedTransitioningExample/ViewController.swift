@@ -14,6 +14,7 @@ final class ViewController: UIViewController {
         super.loadView()
         
         let containerView = UIView()
+        containerView.backgroundColor = .white
         containerView.translatesAutoresizingMaskIntoConstraints = false
         let imageView = UIImageView(image: UIImage(named: "road"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -26,13 +27,15 @@ final class ViewController: UIViewController {
         ])
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
         label.text = "Photo of a road"
+        label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
         containerView.addSubview(label)
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 40.0),
-            imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 40.0),
+            label.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 100.0),
         ])
-        
         self.view = containerView
     }
     
@@ -52,7 +55,7 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: UIViewControllerTransitioningDelegate {
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = StarWarsAnimatedTransitioning()
         animator.operation = .present
         animator.type = .linearRight
@@ -60,7 +63,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         return animator
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = StarWarsAnimatedTransitioning()
         animator.operation = .dismiss
         animator.type = .circularCounterclockwise

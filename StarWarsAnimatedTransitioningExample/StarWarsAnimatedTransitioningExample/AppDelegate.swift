@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func applicationDidFinishLaunching(_ application: UIApplication) {
-        self.window = UIWindow()
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = ViewController()
         self.window?.makeKeyAndVisible()
     }
